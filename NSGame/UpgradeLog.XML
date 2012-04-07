@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="NSGame">
+</Property><Property Name="Solution File" Value="E:\Documents and Settings\Owner\My Documents\Visual Studio 2010\Projects\NSGame\NSGame.sln">
+</Property><Property Name="Date" Value="21 October 2011">
+</Property><Property Name="Time" Value="21:13">
+</Property></Properties><Event ErrorLevel="0" Project="NSGame" Source="NSGame\NSGame.vcproj" Description="Converting project file 'E:\Documents and Settings\Owner\My Documents\Visual Studio 2010\Projects\NSGame\NSGame\NSGame.vcproj'.">
+</Event><Event ErrorLevel="1" Project="NSGame" Source="NSGame\NSGame.vcproj" Description="VCWebServiceProxyGeneratorTool is no longer supported. The tool has been removed from your project settings.">
+</Event><Event ErrorLevel="0" Project="NSGame" Source="NSGame\NSGame.vcproj" Description="Done converting to new project file 'E:\Documents and Settings\Owner\My Documents\Visual Studio 2010\Projects\NSGame\NSGame\NSGame.vcxproj'.">
+</Event><Event ErrorLevel="3" Project="NSGame" Source="NSGame\NSGame.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="NSGame.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="NSGame.sln" Description="Converted">
+</Event></UpgradeLog>

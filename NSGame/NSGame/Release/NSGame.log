@@ -1,0 +1,46 @@
+﻿Build started 22/10/2011 10:50:25.
+     1>Project "E:\Documents and Settings\Owner\My Documents\Visual Studio 2010\Projects\NSGame\NSGame\NSGame.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Release\NSGame.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         All outputs are up-to-date.
+         d:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"D:\Program Files\Microsoft DirectX SDK (June 2010)\Include" /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Release\NSGame.pch" /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Graphics2D.cpp
+         Graphics2D.cpp
+     1>Graphics2D.cpp(24): warning C4018: '<' : signed/unsigned mismatch
+     1>Graphics2D.cpp(135): warning C4018: '<' : signed/unsigned mismatch
+     1>Graphics2D.cpp(154): warning C4018: '<' : signed/unsigned mismatch
+       ResourceCompile:
+         All outputs are up-to-date.
+       Link:
+         d:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\Documents and Settings\Owner\My Documents\Visual Studio 2010\Projects\NSGame\Release\NSGame.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"D:\Program Files\Microsoft DirectX SDK (June 2010)\Lib\x86" d3d9.lib d3dx9d.lib winmm.lib dxerr.lib Dinput8.lib dxguid.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\NSGame.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"E:\Documents and Settings\Owner\My Documents\Visual Studio 2010\Projects\NSGame\Release\NSGame.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\Documents and Settings\Owner\My Documents\Visual Studio 2010\Projects\NSGame\Release\NSGame.lib" /MACHINE:X86 Release\NSGame.res
+         Release\NSGame.obj
+         Release\stdafx.obj
+         Release\Engine.obj
+         Release\TestEngine.obj
+         Release\Game.obj
+         Release\Graphics.obj
+         Release\Graphics2D.obj
+         Release\BasicInput.obj
+         Release\Input.obj
+         Release\Sound.obj
+         Release\Object.obj
+         Release\Sprite.obj
+         Release\TestObject.obj
+         Release\World.obj
+         Release\DummyImporter.obj
+         Release\FileIO.obj
+         Release\XMLReader.obj
+         Generating code
+     1>e:\documents and settings\owner\my documents\visual studio 2010\projects\nsgame\nsgame\graphics2d.cpp(143): warning C4715: 'Graphics2D::CreateSprites' : not all control paths return a value
+         Finished generating code
+         NSGame.vcxproj -> E:\Documents and Settings\Owner\My Documents\Visual Studio 2010\Projects\NSGame\Release\NSGame.exe
+       Manifest:
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"E:\Documents and Settings\Owner\My Documents\Visual Studio 2010\Projects\NSGame\Release\NSGame.exe;#1" /manifest Release\NSGame.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         Deleting file "Release\NSGame.unsuccessfulbuild".
+         Touching "Release\NSGame.lastbuildstate".
+     1>Done Building Project "E:\Documents and Settings\Owner\My Documents\Visual Studio 2010\Projects\NSGame\NSGame\NSGame.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:04.67
