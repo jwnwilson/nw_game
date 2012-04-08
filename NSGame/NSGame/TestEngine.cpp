@@ -62,11 +62,9 @@ bool TestEngine::compute()
 		worldPtr->getObjects()[0]->setXY(x,y);
 	}
 
-
-
 	if(engineInput->escKey())
 	{
-		GAMESTATE = GAME_MENU;
+		GAMESTATE = GAME_EXIT;
 	}
 	else
 	{

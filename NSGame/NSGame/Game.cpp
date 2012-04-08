@@ -114,8 +114,14 @@ bool Game::initialise(HWND hWnd,HINSTANCE hInstance)
 
 bool Game::menu(HWND hWnd)
 {
-	graphicsEngine->draw();
-	updateSettings = gameEngine->menu();
+	if(! graphicsEngine->draw())
+	{
+		return false;
+	}
+	if(! gameEngine->compute())
+	{
+		return false;
+	}
 	GAMESTATE = gameEngine->getGameState();
 
 	//check config changed
@@ -128,7 +134,15 @@ bool Game::menu(HWND hWnd)
 }
 bool Game::load()
 {
-	return true;
+	return true;if(! graphicsEngine->draw())
+	{
+		return false;
+	}
+	if(! gameEngine->compute())
+	{
+		return false;
+	}
+	GAMESTATE = gameEngine->getGameState();
 }
 bool Game::save()
 {
@@ -136,11 +150,18 @@ bool Game::save()
 }
 bool Game::run()
 {
-	graphicsEngine->draw();
-	gameEngine->compute();
+	if(! graphicsEngine->draw())
+	{
+		return false;
+	}
+	if(! gameEngine->compute())
+	{
+		return false;
+	}
 	GAMESTATE = gameEngine->getGameState();
 	return true;
 }
+
 bool Game::exit()
 {
 	return true;
