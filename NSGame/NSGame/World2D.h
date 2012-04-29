@@ -12,8 +12,8 @@ public:
 	 void setMiddleGround(Object*);
 	 void setForeGround(Object*);
 
-	 bool addObject(Object* obj){ return false; }
-	 bool clearObjects() {return false;}
+	 bool addObject(Object* obj){ setBackGround(obj); return true;}
+	 bool clearObjects() {objects.clear(); return true;}
 
 protected:
 

@@ -4,7 +4,7 @@
 #include "BasicInput.h"
 #include "TestEngine.h"
 #include "SpriteEngine.h"
-#include "World.h"
+#include "World2D.h"
 #include "XMLReader.h"
 
 Game::Game(void)
@@ -62,7 +62,7 @@ bool Game::initialise(HWND hWnd,HINSTANCE hInstance)
 	input		   = new BasicInput;
 	gameEngine     = new TestEngine;
 	//gameEngine     = new SpriteEngine;
-	world		   = new World;
+	world		   = new World2D;
 	fileReader     = new XMLReader;
 
 	// not implemented yet
