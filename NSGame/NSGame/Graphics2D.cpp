@@ -167,10 +167,17 @@ bool Graphics2D::CreateSprites()
 	gTexture.resize(world->getObjects().size());
 	for(int i=0;i<world->getObjects().size();i++)
 	{
-		if (FAILED(D3DXCreateTextureFromFile(m_d3dDevice,world->getObjects()[i]->getImage(),&gTexture[i])))
-		 {
-			std::cout<<"error creating texture\n";
-	 		return false;
+		// Need to aquire this from config file
+		string path = "Textures/";
+		string fileName = world->getObjects()[i]->getImage();
+
+		if (FAILED(D3DXCreateTextureFromFile(m_d3dDevice, (path + fileName).c_str() ,&gTexture[i])))
+		{
+			if (FAILED(D3DXCreateTextureFromFile(m_d3dDevice, fileName.c_str() ,&gTexture[i])))
+			{
+				std::cout<<"error creating texture\n";
+	 			return false;
+			}
 		}
 	}
 	return true;

@@ -22,6 +22,15 @@ bool TestEngine::initialise()
 	
 	worldPtr->addObject( backGround );
 
+	Object *hero = new Object();
+	
+	hero->setXY(0,0);
+	hero->setWidth(64);
+	hero->setHeight(64);
+	hero->setImage("hero.tga");
+	
+	worldPtr->setMiddleGround( hero );
+
 	return true;
 }
 bool TestEngine::compute()
@@ -31,35 +40,35 @@ bool TestEngine::compute()
 
 	if(engineInput->Wkey())
 	{
-		x = worldPtr->getObjects()[0]->getX();
-		y = worldPtr->getObjects()[0]->getY();
+		x = worldPtr->getObjects()[1]->getX();
+		y = worldPtr->getObjects()[1]->getY();
 
 		y--;
-		worldPtr->getObjects()[0]->setXY(x,y);
+		worldPtr->getObjects()[1]->setXY(x,y);
 	}
 	if(engineInput->Skey())
 	{
-		x = worldPtr->getObjects()[0]->getX();
-		y = worldPtr->getObjects()[0]->getY();
+		x = worldPtr->getObjects()[1]->getX();
+		y = worldPtr->getObjects()[1]->getY();
 
 		y++;
-		worldPtr->getObjects()[0]->setXY(x,y);
+		worldPtr->getObjects()[1]->setXY(x,y);
 	}
 	if(engineInput->Akey())
 	{
-		x = worldPtr->getObjects()[0]->getX();
-		y = worldPtr->getObjects()[0]->getY();
+		x = worldPtr->getObjects()[1]->getX();
+		y = worldPtr->getObjects()[1]->getY();
 
 		x--;
-		worldPtr->getObjects()[0]->setXY(x,y);
+		worldPtr->getObjects()[1]->setXY(x,y);
 	}
 	if(engineInput->Dkey())
 	{
-		x = worldPtr->getObjects()[0]->getX();
-		y = worldPtr->getObjects()[0]->getY();
+		x = worldPtr->getObjects()[1]->getX();
+		y = worldPtr->getObjects()[1]->getY();
 
 		x++;
-		worldPtr->getObjects()[0]->setXY(x,y);
+		worldPtr->getObjects()[1]->setXY(x,y);
 	}
 
 	if(engineInput->escKey())
