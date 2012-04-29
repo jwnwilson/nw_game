@@ -8,9 +8,9 @@ public:
 	~World2D(void);
 
 	 //vector<Object*> objects getObjects();
-	 void setBackGround(Object*);
-	 void setMiddleGround(Object*);
-	 void setForeGround(Object*);
+	 bool setBackGround(Object*);
+	 bool setMiddleGround(Object*);
+	 bool setForeGround(Object*);
 
 	 bool addObject(Object* obj){ setBackGround(obj); return true;}
 	 bool clearObjects() {objects.clear(); return true;}

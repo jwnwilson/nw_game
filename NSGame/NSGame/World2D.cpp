@@ -39,18 +39,24 @@ bool World2D::upDateObjects()
 
 	return 1;
 }
-void World2D::setBackGround(Object* obj)
+bool World2D::setBackGround(Object* obj)
 {
 	backGround.push_back(obj);
 	upDateObjects();
+
+	return true;
 }
-void World2D::setMiddleGround(Object* obj)
+bool World2D::setMiddleGround(Object* obj)
 {
 	middleGround.push_back(obj);
 	upDateObjects();
+
+	return true;
 }
-void World2D::setForeGround(Object* obj)
+bool World2D::setForeGround(Object* obj)
 {
 	foreGround.push_back(obj);
 	upDateObjects();
+
+	return true;
 }

@@ -173,6 +173,7 @@ bool Graphics2D::CreateSprites()
 	 		return false;
 		}
 	}
+	return true;
 }
 
 bool Graphics2D::DrawSprites()

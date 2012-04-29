@@ -1,5 +1,5 @@
 #pragma once
-#include "World.h"
+#include "World2D.h"
 #include "Input.h"
 
 // Dummy engine class will be used to point to a real engine

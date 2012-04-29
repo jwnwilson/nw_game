@@ -14,6 +14,11 @@ public:
 	virtual bool addObject(Object* obj){objects.push_back(obj); return true;}
 	virtual bool clearObjects();
 
+	virtual bool setBackGround(Object* obj){return false;}
+	virtual bool setMiddleGround(Object* obj){return false;}
+	virtual bool setForeGround(Object* obj){return false;}
+
+
 protected:
 	vector<Object*> objects;
 };

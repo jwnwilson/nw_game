@@ -98,13 +98,25 @@ bool Game::initialise(HWND hWnd,HINSTANCE hInstance)
 	if( gameEngine != NULL)
 	{
 		// pass windows instance and handle to directX stuff in graphics
-		graphicsEngine->initialise(hWnd,hInstance);
+		if( !graphicsEngine->initialise(hWnd,hInstance) )
+		{
+			std::cout<<"error initialising graphics engine.\n";
+			return false;
+		}
 		// allow the graphics engine to see the world
 		graphicsEngine->setWorld(world);
 		// creates sprites should probably be moved from here
-		graphicsEngine->CreateSprites();
+		if( !graphicsEngine->CreateSprites() )
+		{
+			std::cout<<"error initialising sprites.\n";
+			return false;
+		}
 		// initialise my direct X
-		input->initalise(hInstance,hWnd);
+		if( ! input->initalise(hInstance,hWnd))
+		{
+			std::cout<<"error initialising input.\n";
+			return false;
+		}
 
 		gameEngine->setInput(input);
 	}
