@@ -8,6 +8,8 @@ Object::Object(void)
 	z=0;
 	image="unkown";
 	rect=NULL;
+	height= 64;
+	width = 64;
 }
 Object::Object(const int& a,const int& b,const string& c)
 {

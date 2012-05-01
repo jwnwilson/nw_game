@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "TestEngine.h"
 #include "Game.h"
+#include <iostream>
 
 TestEngine::TestEngine(void)
 {
@@ -22,12 +23,19 @@ bool TestEngine::initialise()
 	
 	worldPtr->addObject( backGround );
 
-	Object *hero = new Object();
+	Object *hero = new Sprite();
+	RECT* animRec = new RECT;
+	animRec->left=0;
+	animRec->right=64;
+	animRec->top=0;
+	animRec->bottom=64;
 	
 	hero->setXY(0,0);
-	hero->setWidth(64);
-	hero->setHeight(64);
-	hero->setImage("hero.tga");
+	hero->setWidth(256);
+	hero->setHeight(256);
+	hero->setRowColumnNumber(4,4);
+	hero->setImage("heroSprite.tga");
+	hero->setAnimation(animRec);
 	
 	worldPtr->setMiddleGround( hero );
 
@@ -36,6 +44,7 @@ bool TestEngine::initialise()
 bool TestEngine::compute()
 {
 	int x,y;
+	bool updateAnim = false;
 	engineInput->updateInput();
 
 	if(engineInput->Wkey())
@@ -45,6 +54,8 @@ bool TestEngine::compute()
 
 		y--;
 		worldPtr->getObjects()[1]->setXY(x,y);
+
+		updateAnim = true;
 	}
 	if(engineInput->Skey())
 	{
@@ -53,6 +64,8 @@ bool TestEngine::compute()
 
 		y++;
 		worldPtr->getObjects()[1]->setXY(x,y);
+
+		updateAnim = true;
 	}
 	if(engineInput->Akey())
 	{
@@ -61,6 +74,12 @@ bool TestEngine::compute()
 
 		x--;
 		worldPtr->getObjects()[1]->setXY(x,y);
+
+		if(worldPtr->getObjects()[1]->getCurrentRow() == 1)
+		{
+			worldPtr->getObjects()[1]->setRowColumn(2,1);
+		}
+		updateAnim = true;
 	}
 	if(engineInput->Dkey())
 	{
@@ -69,7 +88,23 @@ bool TestEngine::compute()
 
 		x++;
 		worldPtr->getObjects()[1]->setXY(x,y);
+
+		if(worldPtr->getObjects()[1]->getCurrentRow() == 2)
+		{
+			worldPtr->getObjects()[1]->setRowColumn(1,1);
+		}
+		updateAnim = true;
 	}
+
+	if(worldPtr->getObjects()[1]->getAnimation() != NULL && updateAnim == true)
+	{
+		if(FAILED(worldPtr->getObjects()[1]->setNextFrame()))
+		{
+			std::cout<<"error getting animation RECT from sprite"<<endl;
+			return false;	
+		}
+	}
+
 
 	if(engineInput->escKey())
 	{

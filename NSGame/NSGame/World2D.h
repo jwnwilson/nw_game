@@ -1,5 +1,6 @@
 #pragma once
 #include "world.h"
+#include "Sprite.h"
 class World2D :
 	public World
 {

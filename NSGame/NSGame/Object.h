@@ -25,6 +25,16 @@ public:
 	virtual RECT* getAnimation(){return rect;}
 	virtual char* getImage(){return &image[0];}
 
+	//sprite animation functions
+	virtual void setRowColumnNumber(const int &row,const int &column){;}
+	virtual void setRowColumn(const int &row,const int &column){;}
+	virtual int getCurrentRow(){return 0;}
+	virtual int getCurrentColumn(){return 0;}
+	virtual int getRows(){return 0;}
+	virtual int getColumns(){return 0;}
+	virtual bool setNextFrame(){return false;}
+	virtual bool updateAnimation(){return false;}
+
 protected:
 	float x,y,z;
 	int height,width;
