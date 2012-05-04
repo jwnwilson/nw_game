@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 
+
 // Constructor
 Graphics2D::Graphics2D(void): m_d3dObject(0),m_d3dDevice(0)
 {
@@ -185,7 +186,13 @@ bool Graphics2D::CreateSprites()
 
 bool Graphics2D::DrawSprites()
 {	
-	D3DXVECTOR3 pos;
+	//D3DXVECTOR3 pos;
+	Object *sprite;
+
+	D3DXVECTOR2 spriteCentre;
+	D3DXVECTOR2 scaling;
+	D3DXVECTOR2 trans;
+	float rotation;
 
 	if(FAILED(ppSprite->Begin(D3DXSPRITE_ALPHABLEND)))
 	{
@@ -194,13 +201,31 @@ bool Graphics2D::DrawSprites()
 	}
 	for(int i=0;i<world->getObjects().size();i++)
 	{
-		pos.x= world->getObjects()[i]->getX();
-		pos.y= world->getObjects()[i]->getY();
-		pos.z= world->getObjects()[i]->getZ(); 
+		sprite = world->getObjects()[i];
 
-		if(FAILED(ppSprite->Draw(gTexture[i],world->getObjects()[i]->getAnimation(),NULL,&pos,0xFFFFFFFF)))
+		//pos.x= sprite->getX();
+		//pos.y= sprite->getY();
+		//pos.z= sprite->getZ(); 
+
+		// Set center of sprite
+		spriteCentre= D3DXVECTOR2( (sprite->getWidth() / 2), (sprite->getHeight() / 2) );
+
+		// Screen position of the sprite
+		trans= D3DXVECTOR2(sprite->getX(),sprite->getY());
+
+		// Scaling
+		scaling = D3DXVECTOR2(2.0f,2.0f);
+
+		// Rotate based on the time passed
+		rotation=timeGetTime()/500.0f;
+
+		// out, scaling centre, scaling rotation, scaling, rotation centre, rotation, translation
+		D3DXMatrixTransformation2D(sprite->getMatrix(),NULL,0.0,&scaling,&spriteCentre,rotation,&trans);
+
+		ppSprite->SetTransform(sprite->getMatrix());
+		if(FAILED(ppSprite->Draw(gTexture[i],sprite->getAnimation(),NULL,NULL,0xFFFFFFFF)))
 		{
-			std::cout<<"error drawing "<<world->getObjects()[i]->getImage()<<endl;
+			std::cout<<"error drawing "<<sprite->getName()<<endl;
 			return false;	
 		}
 	}

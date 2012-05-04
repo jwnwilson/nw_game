@@ -25,9 +25,11 @@ public:
 	bool CheckFile(string file);
 	
 	// saves data to file
-	bool setData(string file, string element, string parent,string valueName, double value);
+	bool setDoubleData(string file, string element, string parent,string valueName, double value);
+	bool setStringData(string file, string element, string parent,string valueName, string value);
 	// retrieves data using reference
-	bool getData(string file, string element, string parent,string valueName, double &value);
+	bool getDoubleData(string file, string element, string parent,string valueName, double &value);
+	bool getStringData(string file, string element, string parent,string valueName, string &value);
 
 private:
 	// creates default start to a file

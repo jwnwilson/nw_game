@@ -1,3 +1,6 @@
 <?xml version="1.0" ?>
 <NSGame>
+  <graphicsEngine type="Graphics2D" />
+  <gameEngine type="TestEngine" />
+  <world type="World2D" />
 </NSGame>

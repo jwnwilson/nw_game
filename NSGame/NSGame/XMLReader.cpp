@@ -72,7 +72,7 @@ bool XMLReader::CheckFile(string file)
 	return true;
 }
 
-bool XMLReader::setData(string file, string element, string parent, string valueName, double value)
+bool XMLReader::setDoubleData(string file, string element, string parent, string valueName, double value)
 {
 	// loop through elements find parent
 	TiXmlElement* root;
@@ -87,7 +87,23 @@ bool XMLReader::setData(string file, string element, string parent, string value
 	
 	return true;
 }
-bool XMLReader::getData(string file, string element,string parent,string valueName, double &value)
+
+bool XMLReader::setStringData(string file, string element, string parent, string valueName, string value)
+{
+	// loop through elements find parent
+	TiXmlElement* root;
+	TiXmlElement* pElem;
+	TiXmlElement* cElem;
+	TiXmlHandle docHandle( NULL );
+
+	// if element doesn't exist craete it
+	cElem = getElement(file, element,parent);
+	// set element's value
+	cElem->SetAttribute(&valueName[0], &value[0]);
+	
+	return true;
+}
+bool XMLReader::getDoubleData(string file, string element,string parent,string valueName, double &value)
 {
 	// loop through elements find parent
 	TiXmlElement* root;
@@ -105,7 +121,29 @@ bool XMLReader::getData(string file, string element,string parent,string valueNa
 	// if element doesn't exist error
 
 	// get element's value
-	return false;
+	return true;
+}
+
+bool XMLReader::getStringData(string file, string element,string parent,string valueName, string &value)
+{
+	// loop through elements find parent
+	TiXmlElement* root;
+	TiXmlElement* pElem;
+	TiXmlElement* cElem;
+	TiXmlHandle docHandle( NULL );
+
+	// if element doesn't exist craete it
+	cElem = getElement(file, element,parent);
+	// set element's value
+	value = cElem->Attribute(&valueName[0]);
+	if(value == "")
+	{
+		return false;
+	}
+	// if element doesn't exist error
+
+	// get element's value
+	return true;
 }
 
 TiXmlElement* XMLReader::getElement(string file, string element, string parent)

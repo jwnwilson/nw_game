@@ -14,7 +14,7 @@ TestEngine::~TestEngine(void)
 // hardcoded test
 bool TestEngine::initialise()
 {
-	Object *backGround = new Object();
+	Object *backGround = new Sprite();
 	
 	backGround->setXY(0,0);
 	backGround->setWidth(256);
@@ -104,8 +104,7 @@ bool TestEngine::compute()
 			return false;	
 		}
 	}
-
-
+	
 	if(engineInput->escKey())
 	{
 		GAMESTATE = GAME_EXIT;

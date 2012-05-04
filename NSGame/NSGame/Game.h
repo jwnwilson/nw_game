@@ -14,6 +14,10 @@
 #define GAME_EXIT		5// the game is exiting
 #define GAME_SEXY		6// the game is sexy
 
+//#define WHEREARG			__FILE__, __LINE__
+#define GAMEERROR(msg)		error(msg, __FILE__, __LINE__)		
+#define GAMEWARNING(msg)	error(msg, __FILE__, __LINE__)		
+
 // Need a clock to sync the game
 
 class Game
@@ -29,9 +33,12 @@ public:
 	bool exit();
 	int getGameState(){return GAMESTATE;}
 
-protected:
+	bool error(string errorMsg, string fileName, int lineNumber);
+	bool warning(string warningMsg, string fileName, int lineNumber);
 
+protected:	
 	// all pointers to classes that we will create
+	HWND winHandle;
 	int GAMESTATE;
 	bool updateSettings;
 	Graphics *graphicsEngine;

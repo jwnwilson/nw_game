@@ -3,11 +3,24 @@
 
 Sprite::Sprite(void)
 {
+	image="unkown";
+	rect=NULL;
+	height= 64;
+	width = 64;
 	rows =1;
 	columns =1;
 	currentRow =1;
 	currentColumn =1;
 }
+
+Sprite::Sprite(const int& a,const int& b,const string& c)
+{
+	x=a;
+	y=b;
+	image=c;
+	rect=NULL;
+}
+
 
 Sprite::~Sprite(void)
 {

@@ -81,7 +81,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 					// Load engine, graphics, sound, input, world
 					if(! GAME.initialise(hWnd,hInst) )
 					{
-						// error
+						GAME.error("Uncaught game initialization failure.",__FILE__, __LINE__);
 					}
 					else
 					{
@@ -93,7 +93,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 				{
 					if(! GAME.menu(hWnd) )
 					{
-						// error
+						GAME.error("Uncaught game menu failure.",__FILE__, __LINE__);
 					}
 					else
 					{
@@ -106,7 +106,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 				{
 					if(! GAME.load() )
 					{
-						// error
+						GAME.error("Uncaught game load failure.",__FILE__, __LINE__);
 					}
 					break;
 				}
@@ -114,7 +114,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 				{
 					if(! GAME.run() )
 					{
-						// error
+						GAME.error("Uncaught game run failure.",__FILE__, __LINE__);
 					}
 					else
 					{

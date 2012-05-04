@@ -126,6 +126,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="TestObject.h" />
+    <ClInclude Include="Utilities.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Resource.h" />
