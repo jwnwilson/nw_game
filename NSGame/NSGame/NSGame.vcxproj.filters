@@ -63,9 +63,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="NSGame.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -119,6 +116,15 @@
     </ClCompile>
     <ClCompile Include="World2D.cpp">
       <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="NSGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseKeyboardInput.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -188,6 +194,9 @@
     <ClInclude Include="Utilities.h">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="MouseKeyboardInput.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="NSGame.ico">
@@ -197,6 +206,9 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="ReadMe.txt" />
+    <None Include="config.xml">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NSGame.rc">

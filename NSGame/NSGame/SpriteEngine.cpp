@@ -30,6 +30,10 @@ bool SpriteEngine::menu()
 {
 	// load menu
 
+		// Read menu file
+
+		// Load menu items
+
 	// change settings
 
 	// change game state

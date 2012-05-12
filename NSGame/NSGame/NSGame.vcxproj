@@ -90,6 +90,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="MouseKeyboardInput.cpp" />
     <ClCompile Include="NSGame.cpp" />
     <ClCompile Include="SpriteEngine.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -107,6 +108,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="TestObject.cpp" />
+    <ClCompile Include="Utilities.cpp" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="DummyImporter.cpp" />
     <ClCompile Include="FileIO.cpp" />
@@ -114,6 +116,7 @@
     <ClCompile Include="XMLReader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MouseKeyboardInput.h" />
     <ClInclude Include="NSGame.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="SpriteEngine.h" />
@@ -138,6 +141,7 @@
     <ClInclude Include="XMLReader.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="config.xml" />
     <None Include="NSGame.ico" />
     <None Include="small.ico" />
     <None Include="ReadMe.txt" />

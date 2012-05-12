@@ -23,6 +23,7 @@ public:
 	bool release();
 
 	bool toogleFullScreen(HWND hWnd);
+    void drawCursor(void);
 
 private:
 
@@ -34,6 +35,7 @@ private:
 	//LPDIRECT3DVERTEXBUFFER9 m_vertexBuffer;
 	//LPDIRECT3DINDEXBUFFER9  m_indexBuffer;
 
+	LPDIRECT3DTEXTURE9   m_pCursorTexture;
 	vector<LPDIRECT3DTEXTURE9> gTexture;
 	LPD3DXSPRITE ppSprite;
 	const World* world;

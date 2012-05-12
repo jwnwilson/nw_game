@@ -2,6 +2,8 @@
 #include "TestEngine.h"
 #include "Game.h"
 #include <iostream>
+#include <assert.h>
+#include <mmsystem.h>
 
 TestEngine::TestEngine(void)
 {
@@ -16,7 +18,7 @@ bool TestEngine::initialise()
 {
 	Object *backGround = new Sprite();
 	
-	backGround->setXY(0,0);
+	backGround->setPosXY(0,0);
 	backGround->setWidth(256);
 	backGround->setHeight(256);
 	backGround->setImage("background.tga");
@@ -30,7 +32,7 @@ bool TestEngine::initialise()
 	animRec->top=0;
 	animRec->bottom=64;
 	
-	hero->setXY(0,0);
+	hero->setPosXY(0,0);
 	hero->setWidth(256);
 	hero->setHeight(256);
 	hero->setRowColumnNumber(4,4);
@@ -45,35 +47,37 @@ bool TestEngine::compute()
 {
 	int x,y;
 	bool updateAnim = false;
+	float time = timeGetTime();
 	engineInput->updateInput();
+	SpriteData* animData = worldPtr->getObjects()[1]->getAnimationData();
 
-	if(engineInput->Wkey())
+	if(engineInput->keyPressed(WKEY))
 	{
-		x = worldPtr->getObjects()[1]->getX();
-		y = worldPtr->getObjects()[1]->getY();
+		x = worldPtr->getObjects()[1]->getPosX();
+		y = worldPtr->getObjects()[1]->getPosY();
 
 		y--;
-		worldPtr->getObjects()[1]->setXY(x,y);
+		worldPtr->getObjects()[1]->setPosXY(x,y);
 
 		updateAnim = true;
 	}
-	if(engineInput->Skey())
+	if(engineInput->keyPressed(SKEY))
 	{
-		x = worldPtr->getObjects()[1]->getX();
-		y = worldPtr->getObjects()[1]->getY();
+		x = worldPtr->getObjects()[1]->getPosX();
+		y = worldPtr->getObjects()[1]->getPosY();
 
 		y++;
-		worldPtr->getObjects()[1]->setXY(x,y);
+		worldPtr->getObjects()[1]->setPosXY(x,y);
 
 		updateAnim = true;
 	}
-	if(engineInput->Akey())
+	if(engineInput->keyPressed(AKEY))
 	{
-		x = worldPtr->getObjects()[1]->getX();
-		y = worldPtr->getObjects()[1]->getY();
+		x = worldPtr->getObjects()[1]->getPosX();
+		y = worldPtr->getObjects()[1]->getPosY();
 
 		x--;
-		worldPtr->getObjects()[1]->setXY(x,y);
+		worldPtr->getObjects()[1]->setPosXY(x,y);
 
 		if(worldPtr->getObjects()[1]->getCurrentRow() == 1)
 		{
@@ -81,13 +85,13 @@ bool TestEngine::compute()
 		}
 		updateAnim = true;
 	}
-	if(engineInput->Dkey())
+	if(engineInput->keyPressed(DKEY))
 	{
-		x = worldPtr->getObjects()[1]->getX();
-		y = worldPtr->getObjects()[1]->getY();
+		x = worldPtr->getObjects()[1]->getPosX();
+		y = worldPtr->getObjects()[1]->getPosY();
 
 		x++;
-		worldPtr->getObjects()[1]->setXY(x,y);
+		worldPtr->getObjects()[1]->setPosXY(x,y);
 
 		if(worldPtr->getObjects()[1]->getCurrentRow() == 2)
 		{
@@ -105,7 +109,7 @@ bool TestEngine::compute()
 		}
 	}
 	
-	if(engineInput->escKey())
+	if(engineInput->keyPressed(ESCKEY))
 	{
 		GAMESTATE = GAME_EXIT;
 	}
@@ -118,18 +122,18 @@ bool TestEngine::compute()
 
 bool TestEngine::menu()
 {
-	if(engineInput->getKBInput()[DIK_1]  & 0x80)
+	if(engineInput->keyPressed(DIK_1))
 	{
 		GAMESTATE = GAME_RUN;
 		return true;
 	}
-	else if(engineInput->getKBInput()[DIK_2]  & 0x80)
+	else if(engineInput->keyPressed(DIK_1))
 	{
 		GAMESTATE = GAME_RUN;
 		return true;
 	}
 
-	if(engineInput->escKey())
+	if(engineInput->keyPressed(ESCKEY))
 	{
 		GAMESTATE = GAME_EXIT;
 	}

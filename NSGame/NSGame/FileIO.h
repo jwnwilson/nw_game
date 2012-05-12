@@ -19,4 +19,10 @@ public:
 	// retrieves data using reference
 	virtual bool getDoubleData(string file, string element, string parent,string valueName, double &value){return false;}
 	virtual bool getStringData(string file, string element, string parent,string valueName, string &value){return false;}
+
+	void setWinHandle(HWND w){winHandle = w;}
+
+private:
+	// For error handling
+	HWND winHandle;
 };

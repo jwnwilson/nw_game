@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "Graphics2D.h"
 #include "BasicInput.h"
+#include "MouseKeyboardInput.h"
 #include "TestEngine.h"
 #include "SpriteEngine.h"
 #include "World2D.h"
@@ -61,7 +62,6 @@ Game::~Game(void)
 bool Game::initialise(HWND hWnd,HINSTANCE hInstance)
 {
 	winHandle = hWnd;
-	input		   = new BasicInput;
 	fileReader     = new XMLReader;
 
 	// not implemented yet
@@ -74,16 +74,32 @@ bool Game::initialise(HWND hWnd,HINSTANCE hInstance)
 	// Read a config file to load game
 	if(! fileReader->read("config.xml"))
 	{
-		GAMEERROR("Config file not loaded during initialization");
+		error("Config file not loaded during initialization");
 	}
 
 	string graphicsType;
 	string engineType;
 	string worldType;
+	string inputType;
 
 	fileReader->getStringData("config.xml","graphicsEngine","NSGame","type",graphicsType);
 	fileReader->getStringData("config.xml","gameEngine","NSGame","type",engineType);
 	fileReader->getStringData("config.xml","world","NSGame","type",worldType);
+	fileReader->getStringData("config.xml","input","NSGame","type",inputType);
+
+	// Set input 
+	if(inputType == "BasicInput")
+	{
+		input		   = new BasicInput;
+	}
+	else if(inputType == "MouseKeyboardInput")
+	{
+		input		   = new MouseKeyboardInput;
+	}
+	else
+	{
+		input		   = new BasicInput;
+	}
 
 	// Set Graphics
 	if(graphicsType == "Graphics2D")
@@ -139,7 +155,7 @@ bool Game::initialise(HWND hWnd,HINSTANCE hInstance)
 		// pass windows instance and handle to directX stuff in graphics
 		if( !graphicsEngine->initialise(hWnd,hInstance) )
 		{
-			GAMEERROR("Error initialising graphics engine.");
+			error("Error initialising graphics engine.");
 			return false;
 		}
 		// allow the graphics engine to see the world
@@ -147,16 +163,16 @@ bool Game::initialise(HWND hWnd,HINSTANCE hInstance)
 		// creates sprites should probably be moved from here
 		if( !graphicsEngine->CreateSprites() )
 		{
-			GAMEERROR("Error initialising sprites.");
+			error("Error initialising sprites.");
 			return false;
 		}
 		// initialise my direct X
 		if( ! input->initalise(hInstance,hWnd))
 		{
-			GAMEERROR("Error initialising input.");
+			error("Error initialising input.");
 			return false;
 		}
-
+		graphicsEngine->setInputPointer(input);
 		gameEngine->setInput(input);
 	}
 
@@ -180,7 +196,7 @@ bool Game::menu(HWND hWnd)
 	{
 		if(! graphicsEngine->toogleFullScreen(hWnd))
 		{
-			GAMEERROR("Error changing screen resolution.");
+			error("Error changing screen resolution.");
 		}
 	}
 
@@ -197,6 +213,8 @@ bool Game::load()
 		return false;
 	}
 	GAMESTATE = gameEngine->getGameState();
+
+	return true;
 }
 bool Game::save()
 {
@@ -206,12 +224,12 @@ bool Game::run()
 {
 	if(! graphicsEngine->draw())
 	{
-		GAMEERROR("Graphics Engine draw() failure.");
+		error("Graphics Engine draw() failure.");
 		return false;
 	}
 	if(! gameEngine->compute())
 	{
-		GAMEERROR("Graphics Engine compute() failure.");
+		error("Graphics Engine compute() failure.");
 		return false;
 	}
 	GAMESTATE = gameEngine->getGameState();
@@ -223,22 +241,10 @@ bool Game::exit()
 	return true;
 }
 
-bool Game::error(string errorMsg, string fileName, int lineNumber)
+bool Game::error(string msg)
 {
-	string output = ("Error message:	" + errorMsg + "\n" + "File name:	" + fileName + "\n" + "Line number:\t" + intToString(lineNumber) );
-	if(! MessageBox(winHandle, &output[0], "Error!", MB_ICONSTOP ))
-	{
-		return false;
-	}
+	GAMEERROR( msg, winHandle);
+
 	return true;
 }
 
-bool Game::warning(string warningMsg, string fileName, int lineNumber)
-{
-	string output = ("Warning message:	" + warningMsg + "\n" + "File name:		" + fileName + "\n" + "Line number:\t" + intToString(lineNumber) );
-	if(! MessageBox(winHandle, &output[0], "Warning", MB_ICONQUESTION ))
-	{
-		return false;
-	}
-	return true;
-}

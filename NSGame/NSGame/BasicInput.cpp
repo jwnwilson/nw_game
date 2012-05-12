@@ -38,6 +38,8 @@ BasicInput::~BasicInput(void)
 }
 bool BasicInput::initalise(HINSTANCE hInstance, HWND hWnd)
 {
+	winHandle = hWnd;
+
 	HRESULT hr = DirectInput8Create(hInstance, DIRECTINPUT_VERSION,
     IID_IDirectInput8, (void**)&m_diObject, NULL);
 
@@ -62,8 +64,7 @@ bool BasicInput::initalise(HINSTANCE hInstance, HWND hWnd)
 	if (FAILED(m_diMouse->SetDataFormat(&c_dfDIMouse)))
 		return false;
 
-	if (FAILED(m_diMouse->Acquire()))
-		return false;
+	m_diMouse->Acquire();
 
 	return true;
 
@@ -98,6 +99,18 @@ bool BasicInput::updateInput()
 
 }
 
+bool BasicInput::keyPressed(int keyIndice)
+{
+	if (key[keyIndice] & 0x80)
+	{
+			return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+/*
 bool BasicInput::escKey()
 {
 	if (key[DIK_ESCAPE] & 0x80)
@@ -200,4 +213,4 @@ bool BasicInput::mouseL()
 	{
 		return false;
 	}
-}
+}*/

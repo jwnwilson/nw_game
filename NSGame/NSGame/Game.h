@@ -7,16 +7,12 @@
 #include "FileIO.h"
 
 #define GAME_INIT		0 // the game is initializing
-#define GAME_MENU		1// the game is in the menu mode
-#define GAME_LOAD		2// the game is about to run
-#define GAME_RUN		3// the game is now running
-#define GAME_RESTART	4// the game is going to restart
-#define GAME_EXIT		5// the game is exiting
-#define GAME_SEXY		6// the game is sexy
-
-//#define WHEREARG			__FILE__, __LINE__
-#define GAMEERROR(msg)		error(msg, __FILE__, __LINE__)		
-#define GAMEWARNING(msg)	error(msg, __FILE__, __LINE__)		
+#define GAME_MENU		1 // the game is in the menu mode
+#define GAME_LOAD		2 // the game is about to run
+#define GAME_RUN		3 // the game is now running
+#define GAME_RESTART	4 // the game is going to restart
+#define GAME_EXIT		5 // the game is exiting
+#define GAME_SEXY		6 // the game is sexy	
 
 // Need a clock to sync the game
 
@@ -31,14 +27,13 @@ public:
 	bool save();
 	bool run();
 	bool exit();
+	bool error(string msg);
 	int getGameState(){return GAMESTATE;}
 
-	bool error(string errorMsg, string fileName, int lineNumber);
-	bool warning(string warningMsg, string fileName, int lineNumber);
-
 protected:	
-	// all pointers to classes that we will create
+	// For error handling
 	HWND winHandle;
+	// all pointers to classes that we will create
 	int GAMESTATE;
 	bool updateSettings;
 	Graphics *graphicsEngine;

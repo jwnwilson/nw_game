@@ -3,6 +3,7 @@
 
 Input::Input(void)
 {
+	winHandle = NULL;
 }
 
 Input::~Input(void)

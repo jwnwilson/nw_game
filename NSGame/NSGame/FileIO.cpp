@@ -3,6 +3,7 @@
 
 FileIO::FileIO(void)
 {
+	winHandle = NULL;
 }
 
 FileIO::~FileIO(void)

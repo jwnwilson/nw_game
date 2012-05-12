@@ -3,6 +3,7 @@
 #include "stdafx.h"
 #include "NSGame.h"
 #include "Game.h"
+#include "Utilities.h"
 
 #define MAX_LOADSTRING 100
 
@@ -81,7 +82,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 					// Load engine, graphics, sound, input, world
 					if(! GAME.initialise(hWnd,hInst) )
 					{
-						GAME.error("Uncaught game initialization failure.",__FILE__, __LINE__);
+						GAME.error("Uncaught game initialization failure.");
 					}
 					else
 					{
@@ -93,7 +94,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 				{
 					if(! GAME.menu(hWnd) )
 					{
-						GAME.error("Uncaught game menu failure.",__FILE__, __LINE__);
+						GAME.error("Uncaught game menu failure.");
 					}
 					else
 					{
@@ -106,7 +107,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 				{
 					if(! GAME.load() )
 					{
-						GAME.error("Uncaught game load failure.",__FILE__, __LINE__);
+						GAME.error("Uncaught game load failure.");
 					}
 					break;
 				}
@@ -114,7 +115,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 				{
 					if(! GAME.run() )
 					{
-						GAME.error("Uncaught game run failure.",__FILE__, __LINE__);
+						GAME.error("Uncaught game run failure.");
 					}
 					else
 					{

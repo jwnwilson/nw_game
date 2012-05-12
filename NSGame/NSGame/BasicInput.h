@@ -19,7 +19,9 @@ public:
 	// direct access to mouse input.
 	DIMOUSESTATE* getMInput(){return mouse;}
 
-	bool escKey();
+	bool keyPressed(int);       //check for key
+
+	/*bool escKey();
 	bool Akey();
 	bool Dkey();
 	bool Skey();
@@ -27,6 +29,6 @@ public:
 	bool Spacekey();
 	bool Shiftkey();  //note is only LEFT shift key
 	bool mouseR();
-	bool mouseL();
+	bool mouseL();*/
 };
 

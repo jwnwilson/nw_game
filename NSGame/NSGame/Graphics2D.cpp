@@ -4,12 +4,14 @@
 #include <mmsystem.h>
 #include <string>
 #include <iostream>
+#include "Utilities.h"
 
 
 // Constructor
 Graphics2D::Graphics2D(void): m_d3dObject(0),m_d3dDevice(0)
 {
 	ppSprite=NULL;
+	m_pCursorTexture = NULL;
 
 }
 
@@ -121,7 +123,7 @@ bool Graphics2D::InitialiseDirect3D(HWND hWnd)
 	// will create sprites
 	if (FAILED(D3DXCreateSprite(m_d3dDevice,&ppSprite)))
 	{
-		std::cout<< "error creating sprite\n";
+		GAMEERROR("error creating sprite.",winHandle);
 		return false;
 	}
 	
@@ -176,62 +178,90 @@ bool Graphics2D::CreateSprites()
 		{
 			if (FAILED(D3DXCreateTextureFromFile(m_d3dDevice, fileName.c_str() ,&gTexture[i])))
 			{
-				std::cout<<"error creating texture\n";
+				GAMEERROR("error creating texture.",winHandle);
 	 			return false;
 			}
 		}
+	}
+	// Create Cusor
+	if (FAILED(D3DXCreateTextureFromFile(m_d3dDevice, "Textures/cursor.tga" , &m_pCursorTexture)))
+	{
+		GAMEERROR("error creating cursor texture.",winHandle);
+	 	return false;
 	}
 	return true;
 }
 
 bool Graphics2D::DrawSprites()
 {	
-	//D3DXVECTOR3 pos;
 	Object *sprite;
 
 	D3DXVECTOR2 spriteCentre;
 	D3DXVECTOR2 scaling;
 	D3DXVECTOR2 trans;
+	D3DXVECTOR3 pos;
 	float rotation;
 
 	if(FAILED(ppSprite->Begin(D3DXSPRITE_ALPHABLEND)))
 	{
-		std::cout<<"error begin\n";
+		GAMEERROR("error begining sprites.",winHandle);
 		return false;
 	}
 	for(int i=0;i<world->getObjects().size();i++)
 	{
 		sprite = world->getObjects()[i];
 
-		//pos.x= sprite->getX();
-		//pos.y= sprite->getY();
-		//pos.z= sprite->getZ(); 
-
 		// Set center of sprite
 		spriteCentre= D3DXVECTOR2( (sprite->getWidth() / 2), (sprite->getHeight() / 2) );
 
 		// Screen position of the sprite
-		trans= D3DXVECTOR2(sprite->getX(),sprite->getY());
+		//trans= D3DXVECTOR2(sprite->getPosX(),sprite->getPosY());
 
 		// Scaling
-		scaling = D3DXVECTOR2(2.0f,2.0f);
+		scaling = D3DXVECTOR2(sprite->getScaleX(),sprite->getScaleY());
 
 		// Rotate based on the time passed
-		rotation=timeGetTime()/500.0f;
+		rotation= sprite->getRotX();
 
 		// out, scaling centre, scaling rotation, scaling, rotation centre, rotation, translation
-		D3DXMatrixTransformation2D(sprite->getMatrix(),NULL,0.0,&scaling,&spriteCentre,rotation,&trans);
+		D3DXMatrixTransformation2D(sprite->getMatrix(),NULL,0.0,&scaling,&spriteCentre,rotation,NULL);
+		D3DXMatrixTranslation(sprite->getMatrix(),sprite->getPosX(),sprite->getPosY(),sprite->getPosZ());
 
 		ppSprite->SetTransform(sprite->getMatrix());
 		if(FAILED(ppSprite->Draw(gTexture[i],sprite->getAnimation(),NULL,NULL,0xFFFFFFFF)))
 		{
-			std::cout<<"error drawing "<<sprite->getName()<<endl;
+			GAMEERROR("error drawing sprites.",winHandle);
+			return false;	
+		}
+	}
+	// draw cursor
+	if(m_pCursorTexture != NULL)
+	{
+		// hardcode the shitout of that cursor
+		RECT cursorRect;
+		cursorRect.bottom = 64;
+		cursorRect.top = 0;
+		cursorRect.left = 0;
+		cursorRect.right = 64;
+
+		// Scaling
+		scaling = D3DXVECTOR2(1,1);
+
+		ppSprite->SetTransform(inputPtr->getMatrix());
+		D3DXMatrixTransformation2D(inputPtr->getMatrix(),NULL,0.0,&scaling,NULL,NULL,NULL);
+
+		pos.x = inputPtr->getRelativeX();
+		pos.y = inputPtr->getRelativeY();
+		pos.z = inputPtr->getRelativeZ();
+		if(FAILED(ppSprite->Draw(m_pCursorTexture,&cursorRect,NULL,&pos,0xFFFFFFFF)))
+		{
+			GAMEERROR("error drawing cursor.",winHandle);
 			return false;	
 		}
 	}
 	if(FAILED(ppSprite->End()))
 	{
-		std::cout<<"error end\n";
+		GAMEERROR("error ending sprites.",winHandle);
 		return false;
 
 	}

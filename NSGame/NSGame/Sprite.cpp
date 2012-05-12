@@ -5,18 +5,18 @@ Sprite::Sprite(void)
 {
 	image="unkown";
 	rect=NULL;
-	height= 64;
-	width = 64;
-	rows =1;
-	columns =1;
-	currentRow =1;
-	currentColumn =1;
+	animationData.height= 64;
+	animationData.width = 64;
+	animationData.rows =1;
+	animationData.columns =1;
+	animationData.currentRow =1;
+	animationData.currentColumn =1;
 }
 
 Sprite::Sprite(const int& a,const int& b,const string& c)
 {
-	x=a;
-	y=b;
+	worldSpaceData.posX=a;
+	worldSpaceData.posY=b;
 	image=c;
 	rect=NULL;
 }
@@ -34,13 +34,13 @@ bool Sprite::setNextFrame()
 {
 	if(rect != NULL)
 	{
-		if( currentColumn < columns)
+		if( animationData.currentColumn < animationData.columns)
 		{
-			currentColumn++;
+			animationData.currentColumn++;
 		}
 		else
 		{
-			currentColumn = 1;
+			animationData.currentColumn = 1;
 		}
 		updateAnimation();
 	}
@@ -54,15 +54,15 @@ bool Sprite::setNextFrame()
 
 bool Sprite::updateAnimation()
 {
-	int rectWidth = (width / columns);
-	int rectHeight = (height / rows);
+	int rectWidth = (animationData.width / animationData.columns);
+	int rectHeight = (animationData.height / animationData.rows);
 
 	if(rect != NULL)
 	{
-		rect->left=		( rectWidth* (currentColumn - 1) );
-		rect->right=	( rectWidth* currentColumn );
-		rect->top=		( rectHeight* (currentRow - 1)  ); 
-		rect->bottom=	( rectHeight* currentRow  ); 
+		rect->left=		( rectWidth* (animationData.currentColumn - 1) );
+		rect->right=	( rectWidth* animationData.currentColumn );
+		rect->top=		( rectHeight* (animationData.currentRow - 1)  ); 
+		rect->bottom=	( rectHeight* animationData.currentRow  ); 
 	}
 	else
 	{

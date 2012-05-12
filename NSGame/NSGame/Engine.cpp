@@ -7,6 +7,7 @@ Engine::Engine(void)
 	GAMESTATE = GAME_INIT;
 	worldPtr = NULL;
 	engineInput = NULL;
+	winHandle = NULL;
 }
 
 Engine::~Engine(void)

@@ -19,9 +19,11 @@ public:
 	void setInput(Input* i){ engineInput = i;}
 	int getGameState(){return GAMESTATE;}
 	void setGameState(int g){GAMESTATE = g;}
+	void setWinHandle(HWND w){winHandle = w;}
 
 protected:
-
+	// For error handling
+	HWND winHandle;
 	// will have full access to world
 	int GAMESTATE;
 	World *worldPtr;

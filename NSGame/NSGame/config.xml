@@ -3,4 +3,5 @@
   <graphicsEngine type="Graphics2D" />
   <gameEngine type="TestEngine" />
   <world type="World2D" />
+  <input type="MouseKeyboardInput" />
 </NSGame>
