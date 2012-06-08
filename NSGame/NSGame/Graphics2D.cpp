@@ -25,9 +25,9 @@ Graphics2D::~Graphics2D(void)
 	if (m_d3dObject)
 		m_d3dObject->Release();
 	
-	for(int i=0;i<gTexture.size();i++)
+	for( map<string, LPDIRECT3DTEXTURE9>::iterator ii= gTexture.begin(); ii!=gTexture.end(); ++ii)
 	{
-		gTexture[i]->Release();
+		(*ii).second->Release();
 	}
 	ppSprite->Release();
 }
@@ -41,9 +41,9 @@ bool Graphics2D::release()
 	if (m_d3dObject)
 		m_d3dObject->Release();
 	
-	for(int i=0;i<gTexture.size();i++)
+	for( map<string, LPDIRECT3DTEXTURE9>::iterator ii= gTexture.begin(); ii!=gTexture.end(); ++ii)
 	{
-		gTexture[i]->Release();
+		(*ii).second->Release();
 	}
 	ppSprite->Release();
 
@@ -68,7 +68,6 @@ bool Graphics2D::CheckHR(HRESULT hr)
 
 bool Graphics2D::initialise(HWND hWnd,HINSTANCE hInstance)
 {
-	// Shits gonna get initialized!!
 	if (!InitialiseDirect3D(hWnd))
 		return false;
 
@@ -84,26 +83,8 @@ bool Graphics2D::InitialiseDirect3D(HWND hWnd)
 
 	// A load of params for something directX-y
 	D3DPRESENT_PARAMETERS presParams;
-	ZeroMemory(&presParams,sizeof(presParams));
-	if(fullscreen)
-	{
-		presParams.Windowed=FALSE;
-	}
-	else
-	{
-		presParams.Windowed=TRUE;
-	}
-	presParams.SwapEffect=D3DSWAPEFFECT_DISCARD;
-	presParams.EnableAutoDepthStencil = TRUE;
-	presParams.AutoDepthStencilFormat = D3DFMT_D16;
 
-	// if window
-	//presParams.BackBufferFormat=D3DFMT_UNKNOWN;
-
-	// if full screen
-	presParams.BackBufferFormat = D3DFMT_X8R8G8B8;    // set the back buffer format to 32-bit
-    presParams.BackBufferWidth = SCREEN_WIDTH;    // set the width of the buffer
-    presParams.BackBufferHeight = SCREEN_HEIGHT;    // set the height of the buffer
+	initParameters(presParams);
 
 	// Creates direct render engine
 	HRESULT hr=m_d3dObject->CreateDevice(D3DADAPTER_DEFAULT,D3DDEVTYPE_HAL,hWnd,D3DCREATE_HARDWARE_VERTEXPROCESSING,
@@ -127,8 +108,6 @@ bool Graphics2D::InitialiseDirect3D(HWND hWnd)
 		return false;
 	}
 	
-	// We don't want a z buffer (ask me for explaination) the comment below is a dick
-
 	// As well as specifying that we want a z buffer (above) we also need to turn it on
 	m_d3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
 
@@ -167,16 +146,17 @@ bool Graphics2D::draw()
 bool Graphics2D::CreateSprites()
 {
 	// Gonna store us some textures
-	gTexture.resize(world->getObjects().size());
+	//gTexture.resize(world->getObjects().size());
 	for(int i=0;i<world->getObjects().size();i++)
 	{
 		// Need to aquire this from config file
+		Object *sprite = world->getObjects()[i];
 		string path = "Textures/";
-		string fileName = world->getObjects()[i]->getImage();
+		string fileName = sprite->getImage();
 
-		if (FAILED(D3DXCreateTextureFromFile(m_d3dDevice, (path + fileName).c_str() ,&gTexture[i])))
+		if (FAILED(D3DXCreateTextureFromFile(m_d3dDevice, (path + fileName).c_str() ,&gTexture[sprite->getImage()])))
 		{
-			if (FAILED(D3DXCreateTextureFromFile(m_d3dDevice, fileName.c_str() ,&gTexture[i])))
+			if (FAILED(D3DXCreateTextureFromFile(m_d3dDevice, fileName.c_str() ,&gTexture[sprite->getImage()])))
 			{
 				GAMEERROR("error creating texture.",winHandle);
 	 			return false;
@@ -228,7 +208,7 @@ bool Graphics2D::DrawSprites()
 		D3DXMatrixTranslation(sprite->getMatrix(),sprite->getPosX(),sprite->getPosY(),sprite->getPosZ());
 
 		ppSprite->SetTransform(sprite->getMatrix());
-		if(FAILED(ppSprite->Draw(gTexture[i],sprite->getAnimation(),NULL,NULL,0xFFFFFFFF)))
+		if(FAILED(ppSprite->Draw(gTexture[sprite->getImage()],sprite->getAnimation(),NULL,NULL,0xFFFFFFFF)))
 		{
 			GAMEERROR("error drawing sprites.",winHandle);
 			return false;	
@@ -245,7 +225,7 @@ bool Graphics2D::DrawSprites()
 		cursorRect.right = 64;
 
 		// Scaling
-		scaling = D3DXVECTOR2(1,1);
+		scaling = D3DXVECTOR2(0.5,0.5);
 
 		ppSprite->SetTransform(inputPtr->getMatrix());
 		D3DXMatrixTransformation2D(inputPtr->getMatrix(),NULL,0.0,&scaling,NULL,NULL,NULL);
@@ -278,8 +258,10 @@ bool Graphics2D::toogleFullScreen(HWND hWnd)
 
 	GetWindowRect(hWnd, &WindowRect);
 
-	if(fullscreen)
+	if(! fullscreen)
 	{
+		fullscreen = true;
+		initParameters(presParams);
 		// Set the fullscreen mode style, clear menu if attached
         SetWindowLong(hWnd, GWL_STYLE, WS_POPUP|WS_SYSMENU|WS_VISIBLE);
         if(hMenu == NULL)
@@ -293,6 +275,8 @@ bool Graphics2D::toogleFullScreen(HWND hWnd)
         presParams.BackBufferWidth = SCREEN_WIDTH;
         presParams.BackBufferHeight = SCREEN_HEIGHT;
 
+		// Need to release assets and recreate
+		release();
         // Reset D3D device, any device dependent objects
         if(FAILED(m_d3dDevice->Reset(&presParams)))
         {
@@ -311,13 +295,17 @@ bool Graphics2D::toogleFullScreen(HWND hWnd)
                          (WindowRect.bottom - WindowRect.top),
                          SWP_SHOWWINDOW);
 
-            return false;
-        }
-
-        fullscreen = false;
+            fullscreen = false;
+			return true;
+		}
+		InitialiseDirect3D(hWnd);
+		CreateSprites();
+		
 	}
 	else
 	{
+		fullscreen = false;
+		initParameters(presParams);
 		// Set the windowed mode style, reset menu if needed
         SetWindowLong(hWnd, GWL_STYLE, WS_OVERLAPPEDWINDOW);
         if(hMenu != NULL)
@@ -331,6 +319,7 @@ bool Graphics2D::toogleFullScreen(HWND hWnd)
         presParams.BackBufferWidth = SCREEN_WIDTH;
         presParams.BackBufferHeight = SCREEN_HEIGHT;
 
+		release();
         // Reset D3D device
         if(FAILED(m_d3dDevice->Reset(&presParams)))
             return false;
@@ -341,10 +330,38 @@ bool Graphics2D::toogleFullScreen(HWND hWnd)
                      (WindowRect.right - WindowRect.left),
                      (WindowRect.bottom - WindowRect.top),
                      SWP_SHOWWINDOW);
-
-        fullscreen = true;
+		InitialiseDirect3D(hWnd);
+		CreateSprites();
+        
 	}
-	return false;
+	return true;
+}
+
+
+bool Graphics2D::initParameters(D3DPRESENT_PARAMETERS &presParams)
+{
+	ZeroMemory(&presParams,sizeof(presParams));
+	if(fullscreen)
+	{
+		presParams.Windowed=FALSE;
+	}
+	else
+	{
+		presParams.Windowed=TRUE;
+	}
+	presParams.SwapEffect=D3DSWAPEFFECT_DISCARD;
+	presParams.EnableAutoDepthStencil = TRUE;
+	presParams.AutoDepthStencilFormat = D3DFMT_D16;
+
+	// if window
+	// presParams.BackBufferFormat=D3DFMT_UNKNOWN;
+
+	// if full screen
+	presParams.BackBufferFormat = D3DFMT_X8R8G8B8;    // set the back buffer format to 32-bit
+    presParams.BackBufferWidth = SCREEN_WIDTH;    // set the width of the buffer
+    presParams.BackBufferHeight = SCREEN_HEIGHT;    // set the height of the buffer
+
+	return true;
 }
 
 

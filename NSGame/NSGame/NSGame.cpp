@@ -91,6 +91,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 					break;
 				}
 				case GAME_MENU:
+				case GAME_CONFIG:
 				{
 					if(! GAME.menu(hWnd) )
 					{

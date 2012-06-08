@@ -8,6 +8,7 @@ Engine::Engine(void)
 	worldPtr = NULL;
 	engineInput = NULL;
 	winHandle = NULL;
+	configData.fullscreen = false;
 }
 
 Engine::~Engine(void)

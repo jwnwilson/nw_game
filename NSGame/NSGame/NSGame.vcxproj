@@ -90,6 +90,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Matrix4D.cpp" />
     <ClCompile Include="MouseKeyboardInput.cpp" />
     <ClCompile Include="NSGame.cpp" />
     <ClCompile Include="SpriteEngine.cpp" />
@@ -109,6 +110,9 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="TestObject.cpp" />
     <ClCompile Include="Utilities.cpp" />
+    <ClCompile Include="Vector2D.cpp" />
+    <ClCompile Include="Vector3D.cpp" />
+    <ClCompile Include="Vector4D.cpp" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="DummyImporter.cpp" />
     <ClCompile Include="FileIO.cpp" />
@@ -116,6 +120,8 @@
     <ClCompile Include="XMLReader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Buffer.h" />
+    <ClInclude Include="matrix4d.h" />
     <ClInclude Include="MouseKeyboardInput.h" />
     <ClInclude Include="NSGame.h" />
     <ClInclude Include="Engine.h" />
@@ -130,6 +136,9 @@
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="TestObject.h" />
     <ClInclude Include="Utilities.h" />
+    <ClInclude Include="Vector2D.h" />
+    <ClInclude Include="Vector3D.h" />
+    <ClInclude Include="Vector4D.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Resource.h" />
@@ -141,7 +150,12 @@
     <ClInclude Include="XMLReader.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="config.xml" />
+    <None Include="config.xml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="menu.xml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="NSGame.ico" />
     <None Include="small.ico" />
     <None Include="ReadMe.txt" />

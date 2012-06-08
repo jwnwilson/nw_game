@@ -46,11 +46,13 @@ public:
 	virtual void setRotXYZ(const float& a,const float& b,const float& c){worldSpaceData.rotX=a;worldSpaceData.rotY=b;worldSpaceData.rotZ=c;}
 	virtual void setScaleXYZ(const float& a,const float& b,const float& c){worldSpaceData.scaleX=a;worldSpaceData.scaleY=b;worldSpaceData.scaleZ=c;}
 	virtual void setName(const string &a){name=a;}
+	virtual void setCommand(const string &a){command=a;}
 
 	// Can manipulate object world space
 	virtual ObjectData* getWorldSpaceData(){return &worldSpaceData;}	
 	virtual char* getName(){return &name[0];}
 	virtual D3DXMATRIX* getMatrix(){return NULL;}
+	virtual char* getCommand(){return &command[0];}
 
 	// These can be phased out
 	virtual float getPosX(){return worldSpaceData.posX;}
@@ -89,6 +91,7 @@ public:
 
 protected:
 	string name;
+	string command;
 	// Contains world space data
 	ObjectData worldSpaceData;
 	/*float posX,posY,posZ;

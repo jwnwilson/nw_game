@@ -5,6 +5,7 @@
 #include <d3dx9.h>
 #include <dxerr.h>
 
+#define F1KEY DIK_F1
 #define ESCKEY DIK_ESCAPE
 #define WKEY DIK_W
 #define SKEY DIK_S

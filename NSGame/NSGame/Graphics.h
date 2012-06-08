@@ -19,12 +19,15 @@ public:
 
 	void setWinHandle(HWND w){winHandle = w;}
 	void setInputPointer(Input *iPtr){ inputPtr = iPtr;}
+	bool queryFullscreen(){return fullscreen;}
 
 protected:
 	// For error handling
 	HWND winHandle;
 	int SCREEN_WIDTH;
 	int SCREEN_HEIGHT;
+	RECT ClientRect;                // Saved client rectangle
+	RECT WindowRect;				// Windowed rectangle
 	bool fullscreen;
 	// input pointer to draw cusor
 	Input *inputPtr;

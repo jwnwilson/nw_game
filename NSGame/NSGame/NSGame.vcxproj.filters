@@ -61,6 +61,15 @@
     <Filter Include="Header Files\Utilities">
       <UniqueIdentifier>{b3a78ff6-83da-49c6-829e-63fff1159dd5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Utiltiies">
+      <UniqueIdentifier>{a43c9348-99aa-4558-a0a4-ab50a5653204}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Maths">
+      <UniqueIdentifier>{07586fcf-16bb-4f0f-aa29-dc4c31887ac0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Maths">
+      <UniqueIdentifier>{e739cf77-1d65-48e2-8375-65a467f760a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -124,7 +133,19 @@
       <Filter>Source Files\Input</Filter>
     </ClCompile>
     <ClCompile Include="Utilities.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Utiltiies</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector4D.cpp">
+      <Filter>Source Files\Maths</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2D.cpp">
+      <Filter>Source Files\Maths</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3D.cpp">
+      <Filter>Source Files\Maths</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix4D.cpp">
+      <Filter>Source Files\Maths</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -197,6 +218,21 @@
     <ClInclude Include="MouseKeyboardInput.h">
       <Filter>Header Files\Input</Filter>
     </ClInclude>
+    <ClInclude Include="Vector2D.h">
+      <Filter>Header Files\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3D.h">
+      <Filter>Header Files\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector4D.h">
+      <Filter>Header Files\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="Buffer.h">
+      <Filter>Header Files\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="matrix4d.h">
+      <Filter>Header Files\Maths</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="NSGame.ico">
@@ -207,6 +243,9 @@
     </None>
     <None Include="ReadMe.txt" />
     <None Include="config.xml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="menu.xml">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

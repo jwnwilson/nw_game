@@ -3,7 +3,6 @@
 #include "Game.h"
 #include <iostream>
 #include <assert.h>
-#include <mmsystem.h>
 
 TestEngine::TestEngine(void)
 {
@@ -40,6 +39,22 @@ bool TestEngine::initialise()
 	hero->setAnimation(animRec);
 	
 	worldPtr->setMiddleGround( hero );
+
+	Object *hero2 = new Sprite();
+	RECT* animRec2 = new RECT;
+	animRec2->left=0;
+	animRec2->right=64;
+	animRec2->top=0;
+	animRec2->bottom=64;
+	
+	hero2->setPosXY(50,50);
+	hero2->setWidth(256);
+	hero2->setHeight(256);
+	hero2->setRowColumnNumber(4,4);
+	hero2->setImage("heroSprite.tga");
+	hero2->setAnimation(animRec2);
+	
+	worldPtr->setMiddleGround( hero2 );
 
 	return true;
 }

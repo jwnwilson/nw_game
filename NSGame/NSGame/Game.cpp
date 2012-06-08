@@ -52,6 +52,10 @@ Game::~Game(void)
 	{
 		delete fileReader ;
 	}
+	if	( xmlReader != NULL	)
+	{
+		delete xmlReader ;
+	}
 	if ( sound != NULL)
 	{
 		delete sound ;
@@ -62,7 +66,8 @@ Game::~Game(void)
 bool Game::initialise(HWND hWnd,HINSTANCE hInstance)
 {
 	winHandle = hWnd;
-	fileReader     = new XMLReader;
+	fileReader		= NULL;
+	xmlReader		= new XMLReader;
 
 	// not implemented yet
 	sound		   = NULL;
@@ -72,7 +77,7 @@ bool Game::initialise(HWND hWnd,HINSTANCE hInstance)
 	////////////////////////////////
 
 	// Read a config file to load game
-	if(! fileReader->read("config.xml"))
+	if(! xmlReader->read("config.xml"))
 	{
 		error("Config file not loaded during initialization");
 	}
@@ -82,10 +87,10 @@ bool Game::initialise(HWND hWnd,HINSTANCE hInstance)
 	string worldType;
 	string inputType;
 
-	fileReader->getStringData("config.xml","graphicsEngine","NSGame","type",graphicsType);
-	fileReader->getStringData("config.xml","gameEngine","NSGame","type",engineType);
-	fileReader->getStringData("config.xml","world","NSGame","type",worldType);
-	fileReader->getStringData("config.xml","input","NSGame","type",inputType);
+	xmlReader->getStringData("config.xml","graphicsEngine","NSGame","type",graphicsType);
+	xmlReader->getStringData("config.xml","gameEngine","NSGame","type",engineType);
+	xmlReader->getStringData("config.xml","world","NSGame","type",worldType);
+	xmlReader->getStringData("config.xml","input","NSGame","type",inputType);
 
 	// Set input 
 	if(inputType == "BasicInput")
@@ -139,9 +144,16 @@ bool Game::initialise(HWND hWnd,HINSTANCE hInstance)
 		world = new World2D;
 	}
 
+	////////////////////////////////
+	// Game Engine
+	////////////////////////////////
+
 	// give the game engine access to the world
 	gameEngine->setGameState(GAME_INIT);
 	gameEngine->setWorld(world);
+	gameEngine->setFileIO(fileReader);
+	gameEngine->setXMLReader(xmlReader);
+	gameEngine->setWinHandle(hWnd);
 	// will initalise engine
 	gameEngine->initialise();
 	
@@ -175,33 +187,60 @@ bool Game::initialise(HWND hWnd,HINSTANCE hInstance)
 		graphicsEngine->setInputPointer(input);
 		gameEngine->setInput(input);
 	}
+	else
+	{
+		error("game engine error.");
+	}
 
 	return true;
 }
 
 bool Game::menu(HWND hWnd)
 {
-	if(! graphicsEngine->draw())
+	if(! gameEngine->menu() )
 	{
 		return false;
 	}
-	if(! gameEngine->compute())
+	if(! graphicsEngine->draw())
 	{
 		return false;
 	}
 	GAMESTATE = gameEngine->getGameState();
 
 	//check config changed
-	if(updateSettings)
+	if(GAMESTATE == GAME_CONFIG)
 	{
-		if(! graphicsEngine->toogleFullScreen(hWnd))
+		// get config data
+		ConfigData const *configPtr = gameEngine->getConfigData();
+		// configure the game
+		if(configPtr->fullscreen != graphicsEngine->queryFullscreen())
 		{
-			error("Error changing screen resolution.");
+			if(! graphicsEngine->toogleFullScreen(hWnd))
+			{
+				error("Error changing screen resolution.");
+			}
 		}
 	}
 
 	return true;
 }
+
+bool Game::run()
+{
+	if(! gameEngine->compute())
+	{
+		error("Graphics Engine compute() failure.");
+		return false;
+	}
+	if(! graphicsEngine->draw())
+	{
+		error("Graphics Engine draw() failure.");
+		return false;
+	}
+	GAMESTATE = gameEngine->getGameState();
+	return true;
+}
+
 bool Game::load()
 {
 	if(! graphicsEngine->draw())
@@ -218,21 +257,6 @@ bool Game::load()
 }
 bool Game::save()
 {
-	return true;
-}
-bool Game::run()
-{
-	if(! graphicsEngine->draw())
-	{
-		error("Graphics Engine draw() failure.");
-		return false;
-	}
-	if(! gameEngine->compute())
-	{
-		error("Graphics Engine compute() failure.");
-		return false;
-	}
-	GAMESTATE = gameEngine->getGameState();
 	return true;
 }
 

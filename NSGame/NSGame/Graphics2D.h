@@ -3,6 +3,7 @@
 #include <d3dx9.h>
 #include <dxerr.h>
 #include <vector>
+#include <map>
 #include "World.h"
 #include "Graphics.h"
 
@@ -16,7 +17,6 @@ public:
 	~Graphics2D(void);
 
 	bool initialise(HWND hWnd,HINSTANCE hInstance);
-	// inline function I do this for REALLY small functions
 	bool setWorld(const World* worldPtr){world = worldPtr; return true;}
 	bool CreateSprites();
 	bool draw();
@@ -26,8 +26,7 @@ public:
     void drawCursor(void);
 
 private:
-
-
+	bool initParameters(D3DPRESENT_PARAMETERS &presParams);
 	// Direct3D Objects these are directX classes
 	LPDIRECT3D9 m_d3dObject;
 	LPDIRECT3DDEVICE9 m_d3dDevice;
@@ -36,7 +35,7 @@ private:
 	//LPDIRECT3DINDEXBUFFER9  m_indexBuffer;
 
 	LPDIRECT3DTEXTURE9   m_pCursorTexture;
-	vector<LPDIRECT3DTEXTURE9> gTexture;
+	map<string, LPDIRECT3DTEXTURE9> gTexture;
 	LPD3DXSPRITE ppSprite;
 	const World* world;
 

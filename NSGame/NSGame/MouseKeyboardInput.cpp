@@ -116,6 +116,9 @@ bool MouseKeyboardInput::initMouse(void)
 
 	m_data.m_dwAxes = MouseCapabilities.dwAxes;
 	m_data.m_dwButtons = MouseCapabilities.dwButtons;
+	m_data.m_fSensitivity =1;
+	m_data.m_iHotSpotX =0;
+	m_data.m_iHotSpotY =0;
 
 	//setCursor("arrow.bmp",0,0,0xffffffff);
 	//setAttributes(false,1.0f);
