@@ -186,6 +186,8 @@ bool Game::initialise(HWND hWnd,HINSTANCE hInstance)
 		}
 		graphicsEngine->setInputPointer(input);
 		gameEngine->setInput(input);
+		input->setScreenSize(graphicsEngine->getScreenWidth(),graphicsEngine->getScreenHeight());
+		input->setWindowRect(graphicsEngine->getWindowRect());
 	}
 	else
 	{

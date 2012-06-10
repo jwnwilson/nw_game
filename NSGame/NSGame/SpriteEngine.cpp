@@ -109,13 +109,15 @@ bool SpriteEngine::menu()
 		if( mouseButtonCollision( buttonIndex ) )
 		{
 			// Change state or rules as necessary
-			if( buttonList[buttonIndex]->getCommand() == "start" )
+			if( string(buttonList[buttonIndex]->getCommand()) == "start" )
 			{
 				GAMESTATE = GAME_RUN;
+				return true;
 			}
-			else if( buttonList[buttonIndex]->getCommand() == "exit" )
+			else if( string(buttonList[buttonIndex]->getCommand()) == "exit" )
 			{
 				GAMESTATE = GAME_EXIT;
+				return true;
 			}
 		}
 	}
@@ -151,9 +153,9 @@ bool SpriteEngine::collision(const Vector2D &pos, Object* objPtr)
 
 	result = pos - objPos;
 
-	if(result.x < (width/2) )
+	if(result.x < width )
 	{
-		if(result.y < (height/2) )
+		if(result.y < height )
 		{
 			return true;
 		}

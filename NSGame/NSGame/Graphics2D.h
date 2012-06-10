@@ -35,6 +35,8 @@ private:
 	//LPDIRECT3DINDEXBUFFER9  m_indexBuffer;
 
 	LPDIRECT3DTEXTURE9   m_pCursorTexture;
+	float	cursorScaleX,
+			cursorScaleY;
 	map<string, LPDIRECT3DTEXTURE9> gTexture;
 	LPD3DXSPRITE ppSprite;
 	const World* world;

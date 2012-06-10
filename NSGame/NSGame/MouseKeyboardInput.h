@@ -38,13 +38,13 @@ public:
 	void setCursorPosition(float a,float b){m_data.m_iHotSpotX = a;m_data.m_iHotSpotY = b;}
 
     //get relative movement
-	float getRelativeX(void){return m_data.m_fCursorX;}
-    float getRelativeY(void){return m_data.m_fCursorY;}
+	float getRelativeX(void);
+    float getRelativeY(void);
     //get wheel movement (NEW)
     float getRelativeZ(void){return m_data.m_fCursorZ;}
     //get cursor position (NEW)
-    float                getAbsoluteX(void){return 0;}
-    float                getAbsoluteY(void){return 0;}
+    float                getAbsoluteX(void){return m_data.m_fCursorX;}
+    float                getAbsoluteY(void){return m_data.m_fCursorY;}
     D3DXMATRIX* getMatrix(){return &matrix;}
 
 private:

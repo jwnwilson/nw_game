@@ -53,10 +53,15 @@ public:
     virtual float getRelativeY(void){return mouse_state.lY;}
 	//get wheel movement (NEW)
     virtual float getRelativeZ(void){return mouse_state.lZ;}
+	//get absolute movement
+	virtual float getAbsoluteX(void){return mouse_state.lX;}
+    virtual float getAbsoluteY(void){return mouse_state.lY;}
 	// mouse matrix
 	virtual D3DXMATRIX* getMatrix(){return NULL;}
 
 	void setWinHandle(HWND w){winHandle = w;}
+	void setWindowRect(RECT const *re){windowRect = re;}
+	void setScreenSize(int w, int h){screenWidth =w; screenHeight=h;}
 
 protected:
 	// These may be removed
@@ -77,4 +82,6 @@ protected:
 	// A DirectInput device object for the keyboard. If you want to handle other devices you need one of these for each.
 	LPDIRECTINPUTDEVICE8	m_diKeyboardDevice,
 							m_diMouse ;
+	RECT const *windowRect ;
+	int screenWidth, screenHeight;
 };

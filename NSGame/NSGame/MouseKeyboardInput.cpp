@@ -50,7 +50,24 @@ MouseKeyboardInput::MouseKeyboardInput(HINSTANCE hInstance,HWND hWnd)
 	key=&keys[0];
 }
 
-
+float MouseKeyboardInput::getRelativeX()
+{
+	/*float result;
+	float screenAbsoluteWidth = ( windowRect->right - windowRect->left);
+	float xRatio = screenWidth / screenAbsoluteWidth;
+	result = (m_data.m_fCursorX * xRatio);*/
+	//return result;
+	return m_data.m_fCursorX;
+}
+float MouseKeyboardInput::getRelativeY()
+{
+	/*float result;
+	float screenAbsoluteHeight = ( windowRect->right - windowRect->left);
+	float yRatio = screenWidth / screenAbsoluteHeight;
+	result = (m_data.m_fCursorY * yRatio);*/
+	//return result;
+	return m_data.m_fCursorY;
+}
 
 bool MouseKeyboardInput::initalise(HINSTANCE hInstance,HWND hWnd)
 {

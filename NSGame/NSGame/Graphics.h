@@ -17,17 +17,25 @@ public:
 
 	virtual bool toogleFullScreen(HWND hWnd){return false;}
 
+	void setScreenWidth(int w){SCREEN_WIDTH =w;}
+	void setScreenHeight(int h){SCREEN_HEIGHT =h;}
+	int getScreenWidth(){return SCREEN_WIDTH;}
+	int getScreenHeight(){return SCREEN_HEIGHT;}
+
 	void setWinHandle(HWND w){winHandle = w;}
 	void setInputPointer(Input *iPtr){ inputPtr = iPtr;}
 	bool queryFullscreen(){return fullscreen;}
+	RECT const* getWindowRect()const{return &windowRect;}
 
 protected:
+	// Scale position to match screen size
+	D3DXVECTOR2 scaleTranslateToScreenSize(D3DXVECTOR2 &position);
 	// For error handling
 	HWND winHandle;
 	int SCREEN_WIDTH;
 	int SCREEN_HEIGHT;
-	RECT ClientRect;                // Saved client rectangle
-	RECT WindowRect;				// Windowed rectangle
+	RECT clientRect;                // Saved client rectangle
+	RECT windowRect;				// Windowed rectangle
 	bool fullscreen;
 	// input pointer to draw cusor
 	Input *inputPtr;

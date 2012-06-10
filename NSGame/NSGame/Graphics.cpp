@@ -13,3 +13,16 @@ Graphics::Graphics(void)
 Graphics::~Graphics(void)
 {
 }
+
+
+D3DXVECTOR2 Graphics::scaleTranslateToScreenSize(D3DXVECTOR2 &position)
+{
+	D3DXVECTOR2 result;
+	float screenWidth = ( windowRect.right - windowRect.left);
+	float screenHeight = (windowRect.bottom - windowRect.top);
+	float xRatio =  screenWidth / SCREEN_WIDTH;
+	float yRatio =  screenHeight / SCREEN_HEIGHT;
+	result.x = position.x * xRatio;
+	result.y = position.y * yRatio;
+	return result;
+}

@@ -12,6 +12,8 @@ Graphics2D::Graphics2D(void): m_d3dObject(0),m_d3dDevice(0)
 {
 	ppSprite=NULL;
 	m_pCursorTexture = NULL;
+	cursorScaleX = 0.5;
+	cursorScaleY = 0.5;
 
 }
 
@@ -80,6 +82,8 @@ bool Graphics2D::InitialiseDirect3D(HWND hWnd)
 	m_d3dObject=Direct3DCreate9(D3D_SDK_VERSION);
 	if (!m_d3dObject)
 		return false;
+
+	GetWindowRect(hWnd, &windowRect);
 
 	// A load of params for something directX-y
 	D3DPRESENT_PARAMETERS presParams;
@@ -192,20 +196,22 @@ bool Graphics2D::DrawSprites()
 		sprite = world->getObjects()[i];
 
 		// Set center of sprite
-		spriteCentre= D3DXVECTOR2( (sprite->getWidth() / 2), (sprite->getHeight() / 2) );
+		//spriteCentre= D3DXVECTOR2( (sprite->getWidth() / 2), (sprite->getHeight() / 2) );
+		spriteCentre= D3DXVECTOR2( (sprite->getPosX() + (sprite->getWidth() / 2)), (sprite->getPosY() + (sprite->getHeight() / 2)) );
 
 		// Screen position of the sprite
-		//trans= D3DXVECTOR2(sprite->getPosX(),sprite->getPosY());
+		trans= D3DXVECTOR2(sprite->getPosX(),sprite->getPosY());
+		//trans = scaleTranslateToScreenSize(trans);
 
 		// Scaling
 		scaling = D3DXVECTOR2(sprite->getScaleX(),sprite->getScaleY());
 
-		// Rotate based on the time passed
+		// Rotate
 		rotation= sprite->getRotX();
 
 		// out, scaling centre, scaling rotation, scaling, rotation centre, rotation, translation
-		D3DXMatrixTransformation2D(sprite->getMatrix(),NULL,0.0,&scaling,&spriteCentre,rotation,NULL);
-		D3DXMatrixTranslation(sprite->getMatrix(),sprite->getPosX(),sprite->getPosY(),sprite->getPosZ());
+		D3DXMatrixTransformation2D(sprite->getMatrix(),NULL,0.0,&scaling,&spriteCentre,rotation,&trans);
+		//D3DXMatrixTranslation(sprite->getMatrix(),trans.x,trans.y,sprite->getPosZ());
 
 		ppSprite->SetTransform(sprite->getMatrix());
 		if(FAILED(ppSprite->Draw(gTexture[sprite->getImage()],sprite->getAnimation(),NULL,NULL,0xFFFFFFFF)))
@@ -224,16 +230,20 @@ bool Graphics2D::DrawSprites()
 		cursorRect.left = 0;
 		cursorRect.right = 64;
 
+		spriteCentre= D3DXVECTOR2( (sprite->getPosX() + (sprite->getWidth() / 2)), (sprite->getPosY() + (sprite->getHeight() / 2)) );
+		trans= D3DXVECTOR2(inputPtr->getRelativeX(),inputPtr->getRelativeY());
+		
 		// Scaling
-		scaling = D3DXVECTOR2(0.5,0.5);
+		scaling = D3DXVECTOR2(cursorScaleX,cursorScaleY);
 
+		D3DXMatrixTransformation2D(inputPtr->getMatrix(),NULL,0.0,&scaling,&spriteCentre,NULL,&trans);
+		//D3DXMatrixTranslation(inputPtr->getMatrix(),trans.x,trans.y,inputPtr->getRelativeZ());
 		ppSprite->SetTransform(inputPtr->getMatrix());
-		D3DXMatrixTransformation2D(inputPtr->getMatrix(),NULL,0.0,&scaling,NULL,NULL,NULL);
 
-		pos.x = inputPtr->getRelativeX();
-		pos.y = inputPtr->getRelativeY();
-		pos.z = inputPtr->getRelativeZ();
-		if(FAILED(ppSprite->Draw(m_pCursorTexture,&cursorRect,NULL,&pos,0xFFFFFFFF)))
+		//pos.x = inputPtr->getRelativeX();
+		//pos.y = inputPtr->getRelativeY();
+		//pos.z = inputPtr->getRelativeZ();
+		if(FAILED(ppSprite->Draw(m_pCursorTexture,&cursorRect,NULL,NULL,0xFFFFFFFF)))
 		{
 			GAMEERROR("error drawing cursor.",winHandle);
 			return false;	
@@ -253,10 +263,9 @@ bool Graphics2D::toogleFullScreen(HWND hWnd)
 	HMENU hMenu = NULL; 
 	// A load of params for something directX-y
 	D3DPRESENT_PARAMETERS presParams;
-	RECT WindowRect; 
 	long WindowStyle;
 
-	GetWindowRect(hWnd, &WindowRect);
+	GetWindowRect(hWnd, &windowRect);
 
 	if(! fullscreen)
 	{
@@ -290,9 +299,9 @@ bool Graphics2D::toogleFullScreen(HWND hWnd)
 
             // Set the window position
             SetWindowPos(hWnd, HWND_NOTOPMOST,
-                         WindowRect.left, WindowRect.top,
-                         (WindowRect.right - WindowRect.left),
-                         (WindowRect.bottom - WindowRect.top),
+                         windowRect.left, windowRect.top,
+                         (windowRect.right - windowRect.left),
+                         (windowRect.bottom - windowRect.top),
                          SWP_SHOWWINDOW);
 
             fullscreen = false;
@@ -326,9 +335,9 @@ bool Graphics2D::toogleFullScreen(HWND hWnd)
 
         // Set the window position
         SetWindowPos(hWnd, HWND_NOTOPMOST,
-                     WindowRect.left, WindowRect.top,
-                     (WindowRect.right - WindowRect.left),
-                     (WindowRect.bottom - WindowRect.top),
+                     windowRect.left, windowRect.top,
+                     (windowRect.right - windowRect.left),
+                     (windowRect.bottom - windowRect.top),
                      SWP_SHOWWINDOW);
 		InitialiseDirect3D(hWnd);
 		CreateSprites();
