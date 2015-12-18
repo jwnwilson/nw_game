@@ -1,0 +1,5 @@
+A Simple Game Framework
+
+Using an interface and strategy design patterns .
+
+Able to create a simple modular C++ game engine, the default currently uses directX 9 
